@@ -4,12 +4,11 @@ $(document).ready(function(){
   $(document).on('keydown',checkKeyStroke);
 });
 
-
 var clickClear = function() { // clears display
   $('#display').empty();
 }
 
-var checkKeyStroke = function(e) {
+var checkKeyStroke = function(e) { //checks keystroke and sends input to display methods
   if (e.keyCode >= 48 && e.keyCode <= 58 && e.key !== '*') {
     numberToDisplay(e.key);
     return;
@@ -20,9 +19,10 @@ var checkKeyStroke = function(e) {
     operatorToDisplay(e.key);
     return;
   }
-
+  // no numberpad functionality yet
 }
-var numberToDisplay = function(e) { // displays number based on user click
+
+var numberToDisplay = function(e) { // displays number based on user input
   var number = isNaN(e) ? $(this).text(): e;
   var currentDisplay = $('#display').text();
   if (currentDisplay.length===0) {
@@ -41,7 +41,6 @@ var numberToDisplay = function(e) { // displays number based on user click
 var displayDecimal = function() {
   var currentDisplay = $('#display').text();
   if (currentDisplay.length===0) {
-    console.log('in displayDecimal 1st if statement');
     $('#display').text('0.');
     return;
   }

@@ -12,12 +12,28 @@ var numberToDisplay = function(e) {
     $('#display').text(number);
     return;
   }
-  if (isNaN(currentDisplay.charAt(currentDisplay.length-1))) {
+  if (isNaN(currentDisplay.charAt(currentDisplay.length-1))
+    && currentDisplay.charAt(currentDisplay.length-1) !== '.') {
     $('#display').text(currentDisplay+' '+number);
   }
   else {
     $('#display').text(currentDisplay+number);
   }
+}
+
+var displayDecimal = function() {
+  var currentDisplay = $('#display').text();
+  if (currentDisplay.length===0) {
+    console.log('in displayDecimal 1st if statement');
+    $('#display').text('0.');
+    return;
+  }
+
+  if(isNaN(currentDisplay.charAt(currentDisplay.length-1))) {
+    $('#display').text(currentDisplay+ ' ' + '0.');
+    return;
+  }
+  $('#display').text(currentDisplay+'.');
 }
 
 var operatorToDisplay = function(e) {
@@ -27,6 +43,10 @@ var operatorToDisplay = function(e) {
   }
   if ($(this).attr('id') === 'equals') { //if = clicked, do the math and return
     doTheMath();
+    return;
+  }
+  if ($(this).attr('id') === 'decimal') {
+    displayDecimal();
     return;
   }
   var operator = $(this).text(); // otherwise, add operator to display

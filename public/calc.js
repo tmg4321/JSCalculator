@@ -10,7 +10,7 @@ var clickClear = function() { // clears display
 }
 
 var checkKeyStroke = function(e) {
-  if (e.keyCode >= 48 && e.keyCode <= 58) {
+  if (e.keyCode >= 48 && e.keyCode <= 58 && e.key !== '*') {
     numberToDisplay(e.key);
     return;
   }
@@ -54,17 +54,17 @@ var displayDecimal = function() {
 }
 
 var operatorToDisplay = function(e) {
-  var operator = (e==='+'||e==='-'||e==='*'
-    ||e==='/'||e==='='||e==='.'||e==='Backspace') ? e : $(this).text();
-  if ($(this).attr('id') === 'clear'|| e==='Backspace') { //if 'C' clicked, clear display and return
+  var operator = (e==='+'||e==='-'||e==='*'||e==='/'||e==='='
+  ||e==='Enter'||e==='.'||e==='Backspace') ? e : $(this).text();
+  if (operator==='C'||operator==='Backspace') { //if 'C' clicked or 'delete' pressed, clear display and return
     clickClear();
     return;
   }
-  if ($(this).attr('id') === 'equals'||e==='='||e==='Enter') { //if '=' clicked, do the math and return
+  if (operator==='='||operator==='Enter') { //if '=' clicked, do the math and return
     doTheMath();
     return;
   }
-  if ($(this).attr('id') === 'decimal'||e==='.') { // if '.' clicked, displayDecimal
+  if (operator==='.') { // if '.' clicked, displayDecimal
     displayDecimal();
     return;
   }
@@ -87,6 +87,9 @@ var doTheMath = function() {
       result = subtractNumbers(operand1,operand2);
       break;
     case 'X':
+      result = multiplyNumbers(operand1,operand2);
+      break;
+    case '*':
       result = multiplyNumbers(operand1,operand2);
       break;
     case '/':
